@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مأكولات شعبية - المنيو</title>
+
+<style>
+:root{
+  /* ألوان مستوحاة من اللوجو الجديد */
+  --primary:#8b4513; /* اللون البني الأصيل */
+  --accent:#d2691e;  /* لون برتقالي محروق */
+  --bg:#121212;
+  --card:#1a1a1a;
+}
+
+body{
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:var(--bg);
+  color:white;
+  margin:0;
+  padding:15px;
+}
+
+/* HEADER */
+header{
+  text-align:center;
+  margin-bottom:25px;
+}
+header img{
+  width:150px; /* كبرت اللوجو شوية */
+  border-radius:50%;
+  background:white;
+  padding:5px;
+}
+header h1{
+  color:var(--accent);
+  margin:10px 0 0;
+}
+header p{
+  opacity:.7;
+}
+
+/* CATEGORY */
+.category{
+  background:var(--primary);
+  color:white;
+  padding:6px 15px;
+  border-radius:50px;
+  display:inline-block;
+  font-weight:bold;
+  margin:15px 0;
+}
+
+/* CARD */
+.card{
+  background:var(--card);
+  border-radius:12px;
+  padding:15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+  box-shadow:0 5px 12px rgba(0,0,0,.4);
+}
+
+.info h3{
+  margin:0;
+}
+.info p{
+  margin:5px 0 0;
+  font-size:13px;
+  color:#aaa;
+}
+
+.price{
+  color:var(--accent);
+  font-weight:bold;
+}
+
+/* BUTTON */
+.btn{
+  background:var(--accent);
+  border:none;
+  padding:8px 15px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+  color:white;
+}
+
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.9);
+  z-index: 999;
+}
+
+.box{
+  background:var(--card);
+  max-width:400px;
+  margin:20% auto;
+  padding:20px;
+  border-radius:12px;
+  border:2px solid var(--accent);
+}
+
+input,textarea{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  background:#333;
+  border:none;
+  color:white;
+  border-radius:8px;
+  box-sizing: border-box;
+}
+
+.wa{
+  display:block;
+  text-align:center;
+  background:#25d366;
+  padding:12px;
+  border-radius:8px;
+  text-decoration:none;
+  color:white;
+  font-weight:bold;
+}
+
+.close{
+  text-align:center;
+  margin-top:10px;
+  cursor:pointer;
+  opacity:.7;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<img src="https://i.ibb.co/9m5zfqF1/logo.png" alt="لوجو مأكولات شعبية">
+<h1>مأكولات شعبية 🥘</h1>
+<p>أصالة المذاق.. من تراث مدينة ازمور ✨</p>
+</header>
+
+<div class="category">🍲 الطواجن</div>
+
+<div class="card">
+<div class="info">
+<h3>طاجين باللحم والبرقوق</h3>
+<p>لحم بقري، برقوق معسل، لوز مقلي</p>
+</div>
+<div class="price">45 DH</div>
+<button class="btn" onclick="openOrder('طاجين باللحم والبرقوق')">طلب</button>
+</div>
+
+<div class="card">
+<div class="info">
+<h3>طاجين الدجاج بالزيتون</h3>
+<p>دجاج محمر، زيتون، حامض مصير</p>
+</div>
+<div class="price">35 DH</div>
+<button class="btn" onclick="openOrder('طاجين الدجاج بالزيتون')">طلب</button>
+</div>
+
+<div class="category">🥗 مقبلات</div>
+
+<div class="card">
+<div class="info">
+<h3>سلطة مغربية</h3>
+<p>مطيشة، بصلة، فلفلة، خيار</p>
+</div>
+<div class="price">15 DH</div>
+<button class="btn" onclick="openOrder('سلطة مغربية')">طلب</button>
+</div>
+
+<div id="modal" class="modal">
+<div class="box">
+
+<h3 id="title" style="color:var(--accent)"></h3>
+
+<input id="name" placeholder="الإسم الكامل">
+<input id="addr" placeholder="العنوان">
+<textarea id="note" placeholder="ملاحظات على الطلب (مثال: بدون بصل، خبز زيادة...)"></textarea>
+
+<a id="wa" class="wa">تأكيد عبر واتساب</a>
+
+<div class="close" onclick="closeModal()">رجوع</div>
+
+</div>
+</div>
+
+<script>
+let item="";
+// رقم الهاتف الجديد: 0690596691
+const phone="212690596691";
+
+function openOrder(n){
+  item=n;
+  document.getElementById("title").innerText="طلب: "+n;
+  document.getElementById("modal").style.display="block";
+}
+
+function closeModal(){
+  document.getElementById("modal").style.display="none";
+}
+
+document.getElementById("wa").onclick=function(e){
+  let n=document.getElementById("name").value;
+  let a=document.getElementById("addr").value;
+  let note=document.getElementById("note").value;
+
+  if(!n || !a){
+    alert("عمر الإسم والعنوان جزاك الله خيرا");
+    e.preventDefault();
+    return;
+  }
+
+  let msg=`طلب جديد من مأكولات شعبية%0A🥘 ${item}%0A👤 ${n}%0A📍 ${a}%0A📝 ${note}`;
+  this.href=`https://wa.me/${phone}?text=${msg}`;
+}
+</script>
+
+</body>
+</html>
